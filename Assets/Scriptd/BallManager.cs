@@ -23,6 +23,7 @@ public class BallManager : MonoBehaviour
             if (rb.IsAwake())
                 rb.Sleep();
             GetComponent<Transform>().position += new Vector3(0, increase, 0);
+            scale.GetComponent<Transform>().localScale += new Vector3(boom, 0, 0);
             boom += 0.35f;
         }
         else if (Input.GetKeyUp(KeyCode.Space))

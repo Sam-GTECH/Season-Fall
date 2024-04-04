@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
@@ -5,34 +6,51 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
-    private readonly float increase = 0.01f;
-    public float boom = 0;
+    public float speed = 0f;
+    public float speedIncrease = 0.4f;
+    public float speedMaxIncrease = 13.5f;
+
+    public float currJump = 0f;
+    public float jumpIncrease = 3f;
+    public float maxJump = 10f;
+
     public GameObject scale;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public feetManager feet;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        Debug.Log(speed + " | " +  speedIncrease);
+        Vector2 currVelocity = new(0, GetComponent<Rigidbody2D>().velocity.y);
+
+        if (Input.GetKey(KeyCode.LeftArrow)) {
+            speed -= speedIncrease;
+            //currVelocity.x -= speed;
+        } else
         {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            if (rb.IsAwake())
-                rb.Sleep();
-            GetComponent<Transform>().position += new Vector3(0, increase, 0);
-            scale.GetComponent<Transform>().localScale += new Vector3(boom, 0, 0);
-            boom += 0.35f;
+            speed = Mathf.Clamp(speed - speedIncrease, 0f, speedMaxIncrease);
         }
-        else if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            if (rb.IsSleeping())
-                rb.WakeUp();
-            rb.AddForce(new Vector2(boom, boom/4));
-            boom = 0;
+            speed += speedIncrease;
+            //currVelocity.x += speed;
+        } else {
+            speed = Mathf.Clamp(speed-speedIncrease, -speedMaxIncrease, 0f);
+        }
+
+        if (speed != 0f)
+        {
+            if (speed < 0f)
+                speed = Mathf.Clamp(speed, -speedMaxIncrease, 0f);
+            else if (speed > 0f)
+                speed = Mathf.Clamp(speed, 0f, speedMaxIncrease);
+            currVelocity.x += speed;
+
+            GetComponent<Rigidbody2D>().velocity = currVelocity;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && feet.isGrounded) {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpIncrease));
         }
     }
 }

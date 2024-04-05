@@ -26,7 +26,7 @@ public class Feur : MonoBehaviour
 
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+/*    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("ground"))
         {
@@ -40,5 +40,5 @@ public class Feur : MonoBehaviour
         {
             _currentElement = new Neutral();
         }
-    }
+    }*/
 }

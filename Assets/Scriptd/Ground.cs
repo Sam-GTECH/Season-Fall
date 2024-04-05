@@ -11,11 +11,11 @@ public class Ground : Element
 
         if (Input.GetKey(KeyCode.A))
         {
-            currentVelocity.x += 1;
+            currentVelocity.x -= 1;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            currentVelocity.x -= 1;
+            currentVelocity.x += 1;
         }
 
         body.velocity = currentVelocity;

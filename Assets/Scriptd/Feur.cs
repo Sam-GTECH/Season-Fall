@@ -23,15 +23,22 @@ public class Feur : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+
     }
 
-    public void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("gggggg");
         if (other.CompareTag("ground"))
         {
             _currentElement = new Ground();
+        }
+    }
+    
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("ground"))
+        {
+            _currentElement = new Neutral();
         }
     }
 }

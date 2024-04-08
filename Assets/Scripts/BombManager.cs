@@ -1,13 +1,15 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BombManager : MonoBehaviour
 {
     public GameObject player;
     public float radius;
-
+    private Tilemap map;
     // Start is called before the first frame update
     private void Start()
     {
+        map = GameObject.Find("front").GetComponent<Tilemap>();
     }
 
     private void SetRadius(float radius)
@@ -70,6 +72,8 @@ public class BombManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetRadius(5);
+            map.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position);
+
         }
     }
 }

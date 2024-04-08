@@ -3,19 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-<<<<<<< HEAD
-  - Ground
-  - main
-  - ground
-=======
-  - Bomb
->>>>>>> Bombs-management
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - foreground
+  - 
   - Water
   - UI
   - 

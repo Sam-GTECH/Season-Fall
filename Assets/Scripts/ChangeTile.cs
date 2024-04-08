@@ -7,6 +7,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
+using static UnityEditor.PlayerSettings;
 //using UnityEngine.WSA;
 
 public class ChangeTile : MonoBehaviour
@@ -37,29 +38,22 @@ public class ChangeTile : MonoBehaviour
         map.SetTile(pos, tile);
     }
 
-    private void HandleTilePlacing(Vector3Int pos)
+    public void HandleTilePlacing(Vector3 pos)
     {
-        //for(int i=-1; i<2; i++)
-        //{
-        //    for (int j=-1; j<2; j++)
-        //    {
-        //        pos.x += i;
-        //        pos.y += j;
-        //        string strTile = map.GetTile<Tile>(map.WorldToCell(pos)).ToString();
-        //    }
-        //}
-        //get player element
-        string strTile = map.GetTile<UnityEngine.Tilemaps.Tile>(pos).ToString();
-        //Debug.Log(map.GetTile<Tile>(pos).ToString());
-        char number = strTile[strTile.Length-29];
-        Debug.Log(number);
-        int converted = number - '0';
-        //converted++;
-        //int converted = Convert.ToInt16(number);
-        //Debug.Log(converted);
-        //converted++;
-        //number = Convert.ToChar(converted);
-        //strTile = strTile.Remove(strTile.Length - 1, 1) + number;
-        map.SetTile(pos, icePalette[converted]);
+        Vector3Int cellPos = map.WorldToCell(cam.ScreenToWorldPoint(pos));
+        Vector3Int tPos = new Vector3Int(0, 0, 0);
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                tPos.x = cellPos.x + i;
+                tPos.y = cellPos.y + j;
+                string strTile = map.GetTile<UnityEngine.Tilemaps.Tile>(tPos).ToString();
+                char number = strTile[strTile.Length - 29];
+                Debug.Log(number);
+                int converted = number - '0';
+                map.SetTile(tPos, icePalette[converted]);
+            }
+        }
     }
 }

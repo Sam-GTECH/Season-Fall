@@ -4,9 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Ground
   - main
   - ground
+=======
+  - Bomb
+>>>>>>> Bombs-management
   layers:
   - Default
   - TransparentFX

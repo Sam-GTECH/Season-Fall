@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scriptd/ChangeTile.cs.meta
+guid: b85037b76ddca0e458c83945f38ccaa1
+=======
+guid: 535eb3a34baffc8438381485c4e15d59
+>>>>>>> Bombs-management:Assets/Scripts/ChangeTile.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

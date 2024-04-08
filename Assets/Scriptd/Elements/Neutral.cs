@@ -8,7 +8,7 @@ public class Neutral : Element
 {
     public override void move()
     {
-        Rigidbody2D body = GameObject.FindGameObjectWithTag("main").GetComponent<Rigidbody2D>();
+        Rigidbody2D body = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         Vector2 currentVelocity = new Vector2(0, body.velocity.y);
 
         if (Input.GetKey(KeyCode.A))
@@ -24,7 +24,7 @@ public class Neutral : Element
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            body.AddForce(new Vector2(0, 1000));
+            body.AddForce(new Vector2(0, 1) * 1000);
         }
     }
 }

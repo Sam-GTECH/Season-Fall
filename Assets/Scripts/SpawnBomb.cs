@@ -24,7 +24,7 @@ public class SpawnBomb : MonoBehaviour
         //transform.position = new Vector3(player.transform.position.x + offset, player.transform.position.y, player.transform.position.z);
 
         //Créer un objet
-        Instantiate(bomb, transform.position + Vector3.right * (offset * Random.Range(0.99f, 1.01f)), transform.rotation);
+        Instantiate(bomb, transform.position + Vector3.right * (offset * Random.Range(1.0f, 1.1f)), transform.rotation);
 
         //Debug log of bomb coordinates
         Debug.Log("Bomb coordinates: " + transform.position);
@@ -34,7 +34,7 @@ public class SpawnBomb : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             CreateBomb();
         }

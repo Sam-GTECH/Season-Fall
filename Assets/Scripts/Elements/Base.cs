@@ -9,10 +9,10 @@ public class Feur : MonoBehaviour
     public float powerJump = 1000;
     Element _currentElement;
 
-    // Start is called before the first frame update
-    private void Start()
+    private void OnEnable()
     {
-        _currentElement = new Neutral();
+        _currentElement = new Ground();
+        Debug.Log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY");
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class Feur : MonoBehaviour
     {
         _currentElement.move();
     }
-
+     
     private void OnCollisionEnter2D(Collision2D collision)
     {
 

@@ -4,20 +4,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class Neutral : Element
+public class Ice : Element
 {
     GameObject player = GameObject.FindGameObjectWithTag("main");
-
-    Vector2 last_pos;
 
     float speed = 0f;
     float speedVelocity = 0f;
 
-    public float speedIncrease = 0.4f;
-    public float speedMaxIncrease = 13.5f;
+    public float speedIncrease = 0.8f;
+    public float speedMaxIncrease = 17.5f;
 
-    public float speedDecrease = 3.5f;
-    public float speedDecreaseAir = 0.2f;
+    public float speedDecrease = 1.5f;
+    public float speedDecreaseAir = 0.075f;
     //public float speedDecreaseIce = 0.5f; 
 
     public float maxJump = 12f;
@@ -28,7 +26,7 @@ public class Neutral : Element
     //int damage = 1;
     public override void move()
     {
-        Debug.Log("Neutral");
+        Debug.Log("Ice");
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
 
         speed = 0f;
@@ -78,15 +76,6 @@ public class Neutral : Element
         }
 
         currVelocity.x = speed;
-        /*if (speed != 0f && player.transform.position.x == last_pos.x)
-        {
-            currVelocity.x = 0;
-            speed = 0f;
-            speedVelocity = 0f;
-            dir = 0;
-        }*/
         player.GetComponent<Rigidbody2D>().velocity = currVelocity;
-
-        last_pos = player.transform.position;
     }
 }

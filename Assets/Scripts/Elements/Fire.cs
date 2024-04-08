@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class Neutral : Element
+public class Fire : Element
 {
     GameObject player = GameObject.FindGameObjectWithTag("main");
-
-    Vector2 last_pos;
 
     float speed = 0f;
     float speedVelocity = 0f;
@@ -28,7 +26,7 @@ public class Neutral : Element
     //int damage = 1;
     public override void move()
     {
-        Debug.Log("Neutral");
+        Debug.Log("Fire Fire Light The Fire");
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
 
         speed = 0f;
@@ -78,15 +76,6 @@ public class Neutral : Element
         }
 
         currVelocity.x = speed;
-        /*if (speed != 0f && player.transform.position.x == last_pos.x)
-        {
-            currVelocity.x = 0;
-            speed = 0f;
-            speedVelocity = 0f;
-            dir = 0;
-        }*/
         player.GetComponent<Rigidbody2D>().velocity = currVelocity;
-
-        last_pos = player.transform.position;
     }
 }

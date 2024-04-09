@@ -1,38 +1,118 @@
+using System.Collections;
 using UnityEngine;
 
-public class PlayerMovements : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
-    public float jumpForce = 1000f;
-    public bool isGrounded = false;
+    private float horizontal;
+    private float speed = 8f;
+    private float jumpingPower = 16f;
+    private bool isFacingRight = true;
 
-    private void Move()
+    public int hp = 10;
+    private int damage = 1;
+
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private TrailRenderer tr;
+
+    private Animator animator;
+
+    private void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        Vector2 currentVelocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
-
-        if (Input.GetKey(KeyCode.D))
+        if (isDashing)
         {
-            currentVelocity.x += speed;
-            Debug.Log("D");
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            currentVelocity.x -= speed;
-            Debug.Log("Q");
+            return;
         }
 
-        GetComponent<Rigidbody2D>().velocity = currentVelocity;
+        horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0,1) * 1000);
-            isGrounded = false;
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
+
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+
+        Flip();
+
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDashing)
+        {
+            return;
+        }
+
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private void Flip()
+    {
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        {
+            Vector3 localScale = transform.localScale;
+            isFacingRight = !isFacingRight;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+    }
+
+    public void TakeDamage()
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+        StartCoroutine(WaitInvisibility());
+    }
+
+    private IEnumerator WaitInvisibility()
+    {
+        // Add invisibility logic here
+        yield return new WaitForSeconds(1);
     }
 }

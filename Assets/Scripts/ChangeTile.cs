@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
 using static UnityEditor.PlayerSettings;
+using System.Linq;
 //using UnityEngine.WSA;
 
 public class ChangeTile : MonoBehaviour
@@ -23,14 +24,15 @@ public class ChangeTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        for(int i = 0; i < 196; i++)
+        {
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3Int pos = map.WorldToCell(cam.ScreenToWorldPoint(Input.mousePosition));
-        HandleTilePlacing(pos);
     }
     
     void PlaceTile(Tile tile, Vector3Int pos)
@@ -42,17 +44,24 @@ public class ChangeTile : MonoBehaviour
     {
         Vector3Int cellPos = map.WorldToCell(cam.ScreenToWorldPoint(pos));
         Vector3Int tPos = new Vector3Int(0, 0, 0);
+        Debug.Log("whe here");
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
             {
-                tPos.x = cellPos.x + i;
-                tPos.y = cellPos.y + j;
-                string strTile = map.GetTile<UnityEngine.Tilemaps.Tile>(tPos).ToString();
-                char number = strTile[strTile.Length - 29];
-                Debug.Log(number);
-                int converted = number - '0';
-                map.SetTile(tPos, icePalette[converted]);
+                tPos.x = cellPos.x +i;
+                tPos.y = cellPos.y +j;
+                if (map.GetTile<UnityEngine.Tilemaps.Tile>(tPos))
+                {
+                    string strTile = map.GetTile<UnityEngine.Tilemaps.Tile>(tPos).ToString();
+                    Debug.Log(strTile);
+                    char number = strTile[strTile.Length - 29];
+                    Debug.Log(number);
+                    int converted = number - '0';
+                    map.SetTile(tPos, icePalette[converted]);
+                }
+                else { Debug.Log("miss tile"); }
+                
             }
         }
     }

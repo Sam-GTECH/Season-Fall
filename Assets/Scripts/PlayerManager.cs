@@ -45,7 +45,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(speed + " | ");
+        //Debug.Log(speed + " | ");
         Vector2 currVelocity = new(0, GetComponent<Rigidbody2D>().velocity.y);
 
         speed = 0f;

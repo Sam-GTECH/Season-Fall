@@ -20,6 +20,8 @@ public class Air : Element
 
     public float maxJump = 12f;
 
+    public float gravity = 3.3f;
+
     int dir = 0;
 
     //public int hp = 10;
@@ -28,6 +30,9 @@ public class Air : Element
     {
         Debug.Log("Air");
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
+
+        if (player.GetComponent<Rigidbody2D>().gravityScale != gravity)
+            player.GetComponent<Rigidbody2D>().gravityScale = gravity;
 
         speed = 0f;
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -76,6 +81,7 @@ public class Air : Element
         }
 
         currVelocity.x = speed;
+        currVelocity.y = currVelocity.y + 0.2f;
         player.GetComponent<Rigidbody2D>().velocity = currVelocity;
     }
 }

@@ -20,6 +20,8 @@ public class Ground : Element
 
     public float maxJump = 10f;
 
+    public float gravity = 6.3f;
+
     int dir = 0;
 
     //public int hp = 10;
@@ -28,6 +30,9 @@ public class Ground : Element
     {
         Debug.Log("Ground");
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
+
+        if (player.GetComponent<Rigidbody2D>().gravityScale != gravity)
+            player.GetComponent<Rigidbody2D>().gravityScale = gravity;
 
         speed = 0f;
         if (Input.GetKey(KeyCode.LeftArrow))

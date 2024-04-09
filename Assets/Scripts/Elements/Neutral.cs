@@ -22,6 +22,8 @@ public class Neutral : Element
 
     public float maxJump = 12f;
 
+    public float gravity = 3.3f;
+
     int dir = 0;
 
     //public int hp = 10;
@@ -30,6 +32,9 @@ public class Neutral : Element
     {
         Debug.Log("Neutral");
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
+
+        if (player.GetComponent<Rigidbody2D>().gravityScale != gravity)
+            player.GetComponent<Rigidbody2D>().gravityScale = gravity;
 
         speed = 0f;
         if (Input.GetKey(KeyCode.LeftArrow))

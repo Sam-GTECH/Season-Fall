@@ -1039,6 +1039,7 @@ GameObject:
   - component: {fileID: 1760916345}
   - component: {fileID: 1760916347}
   - component: {fileID: 1760916349}
+  - component: {fileID: 1760916350}
   m_Layer: 0
   m_Name: Player
   m_TagString: main
@@ -1057,8 +1058,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_UseAutoMass: 1
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3.3
@@ -1221,6 +1222,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementspeed: 10
   powerJump: 1000
+--- !u!114 &1760916350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760916339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb894f257d339984aa997c465070b75d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrounded: 0
 --- !u!1 &1990071595
 GameObject:
   m_ObjectHideFlags: 0

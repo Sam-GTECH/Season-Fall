@@ -25,6 +25,13 @@ public class PlayerManager : MonoBehaviour
     public int hp = 10;
     int damage = 1;
 
+    private Animator _anim;
+
+    private void Start()
+    {
+        _anim = GetComponent<Animator>();
+    }
+
     public void takeDamage()
     {
         hp = hp - damage;
@@ -40,7 +47,7 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(1);
     }
 
-    public feetManager feet;
+    public FeetManager feet;
 
     // Update is called once per frame
     void Update()
@@ -51,15 +58,17 @@ public class PlayerManager : MonoBehaviour
         speed = 0f;
         if (Input.GetKey(KeyCode.LeftArrow) )
         {
-            GetComponent<SpriteRenderer>().color = Color.red;
+            //GetComponent<SpriteRenderer>().color = Color.red;
             dir = -1;
             speedVelocity = Mathf.Clamp01(speedVelocity+speedIncrease);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (Input.GetKey(KeyCode.RightArrow) )
         {
-            GetComponent<SpriteRenderer>().color = Color.blue;
+            //GetComponent<SpriteRenderer>().color = Color.blue;
             dir = 1;
             speedVelocity = Mathf.Clamp01(speedVelocity + speedIncrease);
+            transform.localScale = new Vector3(1, 1, 1);
         }
         else
         {
@@ -96,5 +105,8 @@ public class PlayerManager : MonoBehaviour
 
         currVelocity.x = speed;
         GetComponent<Rigidbody2D>().velocity = currVelocity;
+
+        _anim.SetFloat("Speed", Mathf.Abs(speed));
     }
+
 }

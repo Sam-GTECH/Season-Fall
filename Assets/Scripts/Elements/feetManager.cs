@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class feetManager : MonoBehaviour
+public class FeetManager : MonoBehaviour
 {
     public bool isGrounded = false;
 

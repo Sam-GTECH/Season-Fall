@@ -25,6 +25,8 @@ public class PlayerManager : MonoBehaviour
     public int hp = 10;
     int damage = 1;
 
+    Tuple<float, float> last_pos;
+
     public void takeDamage()
     {
         hp = hp - damage;

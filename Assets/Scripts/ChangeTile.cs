@@ -24,9 +24,7 @@ public class ChangeTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < 196; i++)
-        {
-        }
+
     }
 
     // Update is called once per frame
@@ -34,17 +32,13 @@ public class ChangeTile : MonoBehaviour
     {
         Vector3Int pos = map.WorldToCell(cam.ScreenToWorldPoint(Input.mousePosition));
     }
-    
-    void PlaceTile(Tile tile, Vector3Int pos)
-    {
-        map.SetTile(pos, tile);
-    }
 
     public void HandleTilePlacing(Vector3 pos)
     {
+        Debug.Log("precompiled pos  " + pos);
         Vector3Int cellPos = map.WorldToCell(cam.ScreenToWorldPoint(pos));
+        Debug.Log("postcompiled pos  " + pos);
         Vector3Int tPos = new Vector3Int(0, 0, 0);
-        Debug.Log("whe here");
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
@@ -53,11 +47,17 @@ public class ChangeTile : MonoBehaviour
                 tPos.y = cellPos.y +j;
                 if (map.GetTile<UnityEngine.Tilemaps.Tile>(tPos))
                 {
+                    string number = "";
                     string strTile = map.GetTile<UnityEngine.Tilemaps.Tile>(tPos).ToString();
-                    Debug.Log(strTile);
-                    char number = strTile[strTile.Length - 29];
-                    Debug.Log(number);
-                    int converted = number - '0';
+                    if(strTile.Length == 37)
+                    {
+                        number+=strTile[strTile.Length - 29];
+                    }else if(strTile.Length == 38)
+                    {
+                        number+=strTile[strTile.Length - 30];
+                        number+=strTile[strTile.Length - 29];
+                    }
+                    int converted = Convert.ToInt32(number.ToString());
                     map.SetTile(tPos, icePalette[converted]);
                 }
                 else { Debug.Log("miss tile"); }

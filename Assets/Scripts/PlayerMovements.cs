@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
+    private float dashingPower = 700f;
+    private float dashingTime = 1f;
     private float dashingCooldown = 1f;
 
     [SerializeField] private Rigidbody2D rb;
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
+        //Trop beau le prof ^^
         horizontal = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
@@ -47,25 +48,30 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
-
+        print(Input.GetKeyDown(KeyCode.LeftShift) + " " + canDash);
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
         }
 
         Flip();
-
+        //Pouah les muscles du prof mama comment il est trop musclééééé
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
     }
 
     private void FixedUpdate()
     {
-        if (isDashing)
+        if (isDashing == false)
         {
-            return;
+            //    return;
+            print("Moove");
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        }
+        else
+        {
+            Dashing();
         }
 
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
     private bool IsGrounded()
@@ -83,14 +89,14 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
-
+    //
     private IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        //rb.velocity = new Vector2( dashingPower * Time.deltaTime, 0f);
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
@@ -98,6 +104,12 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+        print("Dash");
+    }
+
+    public void Dashing()
+    {
+        rb.velocity = new Vector2(dashingPower * Time.deltaTime, 0f);
     }
 
     public void TakeDamage()

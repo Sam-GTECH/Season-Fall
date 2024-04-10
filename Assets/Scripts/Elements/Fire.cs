@@ -33,7 +33,7 @@ public class Fire : Element
     //int damage = 1;
     public override void move()
     {
-        Debug.Log("Fire Fire Light The Fire");
+        //Debug.Log("Fire Fire Light The Fire");
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
 
         if (player.GetComponent<Rigidbody2D>().gravityScale != gravity)

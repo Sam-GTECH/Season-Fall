@@ -12,7 +12,7 @@ public class Base : MonoBehaviour
 
     private void OnEnable()
     {
-        _currentElement = new Neutral();
+        _currentElement = new Fire();
         Debug.Log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY");
     }
 

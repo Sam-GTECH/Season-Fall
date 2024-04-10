@@ -31,7 +31,7 @@ public class ChangeTile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3Int pos = map.WorldToCell(cam.ScreenToWorldPoint(Input.mousePosition));
+        //Vector3Int pos = map.WorldToCell(cam.ScreenToWorldPoint(Input.mousePosition));
     }
 
     public void HandleTilePlacing(Vector3 pos, string elem)

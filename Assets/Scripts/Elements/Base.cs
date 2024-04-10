@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Feur : MonoBehaviour
+public class Base : MonoBehaviour
 {
 
     public float movementspeed = 10;
     public float powerJump = 1000;
     Element _currentElement;
+    string bombElement = "fire";
 
     private void OnEnable()
     {
@@ -19,6 +20,7 @@ public class Feur : MonoBehaviour
     private void Update()
     {
         _currentElement.move();
+        if (Input.GetKeyDown(KeyCode.C)) { changeBombElem(); }
     }
      
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,9 +28,9 @@ public class Feur : MonoBehaviour
 
     }
 
-/*    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("ground"))
+        if (other.CompareTag("GroundElem"))
         {
             _currentElement = new Ground();
         }
@@ -36,9 +38,35 @@ public class Feur : MonoBehaviour
     
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("ground"))
+        if (other.CompareTag("GroundElem"))
         {
             _currentElement = new Neutral();
         }
-    }*/
+    }
+
+    public virtual string getElem()
+    {
+        return bombElement;
+    }
+
+    private void changeBombElem()
+    {
+        switch (bombElement)
+        {
+            case "ice":
+                bombElement = "fire";
+                break;
+            case "fire":
+                bombElement = "ground";
+                break;
+            case "ground":
+                bombElement = "air";
+                break;
+            case "air":
+                bombElement = "ice";
+                break;
+            default:
+                return;
+        }
+    }
 }

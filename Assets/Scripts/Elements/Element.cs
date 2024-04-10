@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class Element
 {
-    Feur _entity;
+    Base _entity;
     public abstract void move();
 
-
+    public virtual string getElem()
+    {
+        return "neutral";
+    }
 }

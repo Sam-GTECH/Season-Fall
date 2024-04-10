@@ -162,3 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 1
+  FireZone: {fileID: 3373998742733655846, guid: 981685394560e2f4c855af67cb745a33, type: 3}
+  IceZone: {fileID: 3373998742733655846, guid: cdba87ec770b5ce4fa12e71d718abcaf, type: 3}
+  AirZone: {fileID: 3373998742733655846, guid: 21ffcdf0ba223284bb99939c96aecbb3, type: 3}
+  GroundZone: {fileID: 3373998742733655846, guid: b72646fa497518b44944881d0ca24a48, type: 3}

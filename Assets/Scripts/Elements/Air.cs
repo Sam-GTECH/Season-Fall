@@ -84,4 +84,9 @@ public class Air : Element
         currVelocity.y = currVelocity.y + 0.2f;
         player.GetComponent<Rigidbody2D>().velocity = currVelocity;
     }
+
+    public override string getElem()
+    {
+        return "air";
+    }
 }

@@ -119,4 +119,9 @@ public class Fire : Element
             player.GetComponent<Rigidbody2D>().velocity = currVelocity;
         }
     }
+
+    public override string getElem()
+    {
+        return "fire";
+    }
 }

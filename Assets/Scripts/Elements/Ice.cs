@@ -83,4 +83,9 @@ public class Ice : Element
         currVelocity.x = speed;
         player.GetComponent<Rigidbody2D>().velocity = currVelocity;
     }
+
+    public override string getElem()
+    {
+        return "ice";
+    }
 }

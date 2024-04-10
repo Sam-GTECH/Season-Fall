@@ -83,4 +83,10 @@ public class Ground : Element
         currVelocity.x = speed;
         player.GetComponent<Rigidbody2D>().velocity = currVelocity;
     }
+
+    public override string getElem()
+    {
+        return "ground";
+    }
+
 }

@@ -161,4 +161,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e8e09640c0e8e4fa466eeca65e98df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  radius: 0
+  elementZone: {fileID: 3373998742733655846, guid: b72646fa497518b44944881d0ca24a48, type: 3}

@@ -1,10 +1,17 @@
 using System;
+using System.Data;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class BombManager : MonoBehaviour
 {
     public float radius;
+    public GameObject FireZone;
+    public GameObject IceZone;
+    public GameObject AirZone;
+    public GameObject GroundZone;
+    private string currentElem;
+    private GameObject currentZone;
     private GameObject player;
     private Tilemap foreground;
     private Tilemap background;
@@ -14,6 +21,25 @@ public class BombManager : MonoBehaviour
         player = GameObject.Find("Player");
         foreground = GameObject.Find("front").GetComponent<Tilemap>();
         background = GameObject.Find("back").GetComponent<Tilemap>();
+        switch (player.GetComponent<Base>().getElem())
+        {
+            case "ground":
+                currentZone = GroundZone;
+                currentElem = "ground";
+                break;
+            case "fire":
+                currentZone = FireZone;
+                currentElem = "fire";
+                break;
+            case "air":
+                currentZone = AirZone;
+                currentElem = "air";
+                break;
+            case "ice":
+                currentZone = IceZone;
+                currentElem = "ice";
+                break;
+        }
     }
 
     private void SetRadius(float radius)
@@ -76,8 +102,11 @@ public class BombManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetRadius(5);
-            foreground.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position);
-            background.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position);
+            Instantiate(currentZone, transform.position, transform.rotation);
+            foreground.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position, currentElem);
+            background.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position, currentElem);
+            //background.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position, "neutral");
+            Destroy(this.gameObject);
         }
     }
 }

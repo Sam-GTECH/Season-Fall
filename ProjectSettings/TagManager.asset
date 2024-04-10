@@ -7,6 +7,12 @@ TagManager:
   - Bomb
   - back
   - front
+  - Ground
+  - main
+  - GroundElem
+  - IceElem
+  - FireElem
+  - WindElem
   layers:
   - Default
   - TransparentFX

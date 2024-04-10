@@ -30,7 +30,6 @@ public class Neutral : Element
     //int damage = 1;
     public override void move()
     {
-        Debug.Log("Neutral");
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
 
         if (player.GetComponent<Rigidbody2D>().gravityScale != gravity)

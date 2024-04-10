@@ -11,7 +11,7 @@ public class Feur : MonoBehaviour
 
     private void OnEnable()
     {
-        _currentElement = new Air();
+        _currentElement = new Neutral();
         Debug.Log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY");
     }
 

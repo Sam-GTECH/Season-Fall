@@ -34,11 +34,35 @@ public class Base : MonoBehaviour
         {
             _currentElement = new Ground();
         }
+        else if (other.CompareTag("WindElem"))
+        {
+            _currentElement = new Air();
+        }
+        else if (other.CompareTag("FireElem"))
+        {
+            _currentElement = new Fire();
+        }
+        else if (other.CompareTag("IceElem"))
+        {
+            _currentElement = new Ice();
+        }
     }
     
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("GroundElem"))
+        {
+            _currentElement = new Neutral();
+        }
+        else if (other.CompareTag("WindElem"))
+        {
+            _currentElement = new Neutral();
+        }
+        else if (other.CompareTag("FireElem"))
+        {
+            _currentElement = new Neutral();
+        }
+        else if (other.CompareTag("IceElem"))
         {
             _currentElement = new Neutral();
         }

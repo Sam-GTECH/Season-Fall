@@ -11,6 +11,10 @@ public class BombManager : MonoBehaviour
     public GameObject IceZone;
     public GameObject AirZone;
     public GameObject GroundZone;
+    public Sprite FireBomb;
+    public Sprite IceBomb;
+    public Sprite AirBomb;
+    public Sprite GroundBomb;
     private string currentElem;
     private GameObject currentZone;
     private GameObject player;
@@ -27,18 +31,22 @@ public class BombManager : MonoBehaviour
             case "ground":
                 currentZone = GroundZone;
                 currentElem = "ground";
+                GetComponent<SpriteRenderer>().sprite = GroundBomb;
                 break;
             case "fire":
                 currentZone = FireZone;
                 currentElem = "fire";
+                GetComponent<SpriteRenderer>().sprite = FireBomb;
                 break;
             case "air":
                 currentZone = AirZone;
                 currentElem = "air";
+                GetComponent<SpriteRenderer>().sprite = AirBomb;
                 break;
             case "ice":
                 currentZone = IceZone;
                 currentElem = "ice";
+                GetComponent<SpriteRenderer>().sprite = IceBomb;
                 break;
         }
     }

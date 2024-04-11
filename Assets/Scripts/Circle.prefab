@@ -166,3 +166,7 @@ MonoBehaviour:
   IceZone: {fileID: 3373998742733655846, guid: cdba87ec770b5ce4fa12e71d718abcaf, type: 3}
   AirZone: {fileID: 3373998742733655846, guid: 21ffcdf0ba223284bb99939c96aecbb3, type: 3}
   GroundZone: {fileID: 3373998742733655846, guid: b72646fa497518b44944881d0ca24a48, type: 3}
+  FireBomb: {fileID: 21300000, guid: 331d9858ada160748968e0a59a4a8d70, type: 3}
+  IceBomb: {fileID: 21300000, guid: e2a65b77512d2df47b8c37fb65f3f8a9, type: 3}
+  AirBomb: {fileID: 21300000, guid: a1474ee3d165d254d99d9027076a6fed, type: 3}
+  GroundBomb: {fileID: 21300000, guid: fcfecd8002819524a8aac526bc6ce6db, type: 3}

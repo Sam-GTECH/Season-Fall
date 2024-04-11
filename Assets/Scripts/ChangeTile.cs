@@ -70,18 +70,21 @@ public class ChangeTile : MonoBehaviour
                 {
                     string number = "";
                     string strTile = map.GetTile<UnityEngine.Tilemaps.Tile>(tPos).ToString();
-                    Debug.Log(strTile.Length);
-                    if(strTile.Length == 37)
+                    string discriminatory = strTile.Substring(0, 3);
+                    Debug.Log(discriminatory);
+                    short len;
+                    lenghTool.TryGetValue(discriminatory, out len);
+                    if (strTile.Length == len )
                     {
                         number+=strTile[strTile.Length - 29];
-                    }else if(strTile.Length == 38)
+                    }else if(strTile.Length == len+1)
                     {
                         number+=strTile[strTile.Length - 30];
                         number+=strTile[strTile.Length - 29];
                     }
                     else { break; }
                     int converted = Convert.ToInt32(number.ToString());
-                    //Debug.Log(strTile.Length);
+                    Debug.Log(strTile);
                     map.SetTile(tPos, palette[converted]);
                 }
                 else { Debug.Log("miss tile"); }
@@ -92,9 +95,9 @@ public class ChangeTile : MonoBehaviour
 
     private static Dictionary<string, short> lenghTool = new Dictionary<string, short>() {
         { "ice", 33 },
-        { "fire", 34 },
-        { "ground", 36 },
-        { "air", 33 },
-        { "neutral", 37 }
+        { "fir", 34 },
+        { "gro", 36 },
+        { "ai", 33 },
+        { "neu", 37 }
     };
 }

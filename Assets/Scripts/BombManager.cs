@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -102,11 +103,30 @@ public class BombManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetRadius(5);
-            Instantiate(currentZone, transform.position, transform.rotation);
-            foreground.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position, currentElem);
-            background.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position, currentElem);
-            //background.GetComponent<ChangeTile>().HandleTilePlacing(GetComponent<Transform>().position, "neutral");
+            GameObject instance = Instantiate(currentZone, transform.position, transform.rotation);
+            Vector3 pos = GetComponent<Transform>().position;
+            ElemDecay.handleExistingZones(() => {
+                Destroy(instance);
+                foreground.GetComponent<ChangeTile>().HandleTilePlacing(pos, "neutral");
+                background.GetComponent<ChangeTile>().HandleTilePlacing(pos, "neutral");
+            });
+            foreground.GetComponent<ChangeTile>().HandleTilePlacing(pos, currentElem);
+            background.GetComponent<ChangeTile>().HandleTilePlacing(pos, currentElem);            
             Destroy(this.gameObject);
+        }
+    }
+}
+
+static class ElemDecay
+{
+    static List<Action> activeZones = new List<Action>();
+    public static void handleExistingZones(Action newZone)
+    {
+        activeZones.Add(newZone);
+        if (activeZones.Count >= 3)
+        {
+            activeZones[0]();
+            activeZones.RemoveAt(0);
         }
     }
 }

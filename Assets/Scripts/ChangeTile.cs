@@ -71,7 +71,6 @@ public class ChangeTile : MonoBehaviour
                     string number = "";
                     string strTile = map.GetTile<UnityEngine.Tilemaps.Tile>(tPos).ToString();
                     string discriminatory = strTile.Substring(0, 3);
-                    Debug.Log(discriminatory);
                     short len;
                     lenghTool.TryGetValue(discriminatory, out len);
                     if (strTile.Length == len )
@@ -84,7 +83,6 @@ public class ChangeTile : MonoBehaviour
                     }
                     else { break; }
                     int converted = Convert.ToInt32(number.ToString());
-                    Debug.Log(strTile);
                     map.SetTile(tPos, palette[converted]);
                 }
                 else { Debug.Log("miss tile"); }

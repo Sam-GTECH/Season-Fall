@@ -93,4 +93,28 @@ public class Base : MonoBehaviour
                 return;
         }
     }
+
+    public void setElement(string elem)
+    {
+        switch (elem)
+        {
+            case "neutral":
+                _currentElement = new Neutral();
+                break;
+            case "ice":
+                _currentElement = new Ice();
+                break;
+            case "fire":
+                _currentElement = new Fire();
+                break;
+            case "ground":
+                _currentElement = new Ground();
+                break;
+            case "air":
+                _currentElement = new Air();
+                break;
+            default:
+                return;
+        }
+    }
 }

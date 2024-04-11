@@ -1,14 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Tilemaps;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
-using static UnityEditor.PlayerSettings;
-using System.Linq;
 //using UnityEngine.WSA;
 
 public class ChangeTile : MonoBehaviour

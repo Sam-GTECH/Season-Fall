@@ -13,6 +13,7 @@ TagManager:
   - IceElem
   - FireElem
   - WindElem
+  - Grid
   layers:
   - Default
   - TransparentFX

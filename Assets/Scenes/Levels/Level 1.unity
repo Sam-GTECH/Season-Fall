@@ -8894,9 +8894,10 @@ GameObject:
   - component: {fileID: 1924420435}
   - component: {fileID: 1924420434}
   - component: {fileID: 1924420437}
+  - component: {fileID: 1924420438}
   m_Layer: 0
   m_Name: Grid
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9058,6 +9059,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1924420438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924420433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627124491f6c8eb45a64b9c5328c0669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelElement: neutral
 --- !u!1 &1990071595
 GameObject:
   m_ObjectHideFlags: 0

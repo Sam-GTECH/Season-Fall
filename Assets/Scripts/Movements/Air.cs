@@ -68,7 +68,7 @@ public class Air : MonoBehaviour
         }
         speed = (speedMaxIncrease * speedVelocity) * dir;
         currVelocity.x = speed;
-        currVelocity.y = currVelocity.y + 0.2f;
+        currVelocity.y = currVelocity.y + 1.5f;
         player.GetComponent<Rigidbody2D>().velocity = currVelocity;
     }
 }

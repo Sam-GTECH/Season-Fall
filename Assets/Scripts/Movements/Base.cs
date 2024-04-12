@@ -21,7 +21,7 @@ public class Base : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.C)) { changeBombElem(); }
     }
 
     void setElement(string elem)

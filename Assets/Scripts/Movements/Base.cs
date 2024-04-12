@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Base : MonoBehaviour
@@ -8,6 +6,7 @@ public class Base : MonoBehaviour
     GameObject player;
     public Action deleteLastElement;
     string bombElement;
+    public Animator animator;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -16,45 +15,47 @@ public class Base : MonoBehaviour
         deleteLastElement = () => { };
         setElement(GameObject.Find("Grid").GetComponent<GridElement>().getElement());
         bombElement = "fire";
+        animator = player.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.C)) { changeBombElem(); }
     }
 
     void setElement(string elem)
     {
-        switch(elem) {
-        case "neutral":
+        switch (elem)
+        {
+            case "neutral":
                 deleteLastElement();
                 player.AddComponent<Neutral>();
                 deleteLastElement = () => { Destroy(player.GetComponent<Neutral>()); };
-            break;
-        case "ice":
+                break;
+            case "ice":
                 deleteLastElement();
                 player.AddComponent<Ice>();
                 deleteLastElement = () => { Destroy(player.GetComponent<Ice>()); };
                 break;
-        case "fire":
+            case "fire":
                 deleteLastElement();
                 player.AddComponent<Fire>();
                 deleteLastElement = () => { Destroy(player.GetComponent<Fire>()); };
                 break;
-        case "ground":
+            case "ground":
                 deleteLastElement();
                 player.AddComponent<Ground>();
                 deleteLastElement = () => { Destroy(player.GetComponent<Ground>()); };
                 break;
-        case "air":
+            case "air":
                 deleteLastElement();
                 player.AddComponent<Air>();
                 deleteLastElement = () => { Destroy(player.GetComponent<Air>()); };
                 break;
-        default:
-            return;
-        } 
+            default:
+                return;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -84,7 +85,6 @@ public class Base : MonoBehaviour
             setElement("neutral");
         }
     }
-
     public virtual string getElem()
     {
         return bombElement;

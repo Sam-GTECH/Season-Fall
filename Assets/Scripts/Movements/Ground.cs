@@ -26,7 +26,7 @@ public class Ground : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("main");
     }
 
-    void FixedUpdate()
+    void Update()
     {
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
 

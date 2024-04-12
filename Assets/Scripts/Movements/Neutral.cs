@@ -1,53 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Neutral : MonoBehaviour
 {
-    GameObject player;
+    private GameObject player;
+    private Rigidbody2D rb;
+    private Animator animator;
 
-    float speed = 0f;
-    float speedVelocity = 0f;
+    private float speed = 0f;
+    private float speedVelocity = 0f;
+    private int dir = 0;
 
     public float speedIncrease = 0.4f;
     public float speedMaxIncrease = 13.5f;
-
     public float speedDecrease = 3.5f;
     public float speedDecreaseAir = 0.2f;
-
     public float maxJump = 12f;
-
     public float gravity = 3.3f;
-
-    int dir = 0;
 
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("main");
+        rb = player.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
-    void FixedUpdate()
+    private void Update()
     {
-        Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
+        Vector2 currVelocity = rb.velocity;
 
-        if (player.GetComponent<Rigidbody2D>().gravityScale != gravity)
-            player.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        if (rb.gravityScale != gravity)
+            rb.gravityScale = gravity;
 
         speed = 0f;
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         {
-            dir = -1;
+            dir = Input.GetKey(KeyCode.LeftArrow) ? -1 : 1;
             speedVelocity = Mathf.Clamp01(speedVelocity + speedIncrease);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            dir = 1;
-            speedVelocity = Mathf.Clamp01(speedVelocity + speedIncrease);
+            player.transform.localScale = new Vector2(dir * Mathf.Abs(player.transform.localScale.x), player.transform.localScale.y);
         }
         else
         {
-            speed = (speedMaxIncrease * speedVelocity) * dir;
-            if ((dir == 1 && speed > 0f || dir == -1 && speed < 0f))
+            if (dir != 0)
             {
                 if (player.GetComponent<feetManager>().isGrounded)
                 {
@@ -57,25 +50,21 @@ public class Neutral : MonoBehaviour
                 {
                     speedVelocity -= speedDecreaseAir * Time.deltaTime;
                 }
-                speed = Mathf.Lerp(0f, speedMaxIncrease, speedVelocity);
+                speedVelocity = Mathf.Clamp01(speedVelocity);
             }
-            else
-            {
-                speed = 0f;
-                speedVelocity = 0f;
-                dir = 0;
-            }
+            dir = 0;
         }
+
         speed = (speedMaxIncrease * speedVelocity) * dir;
         currVelocity.x = speed;
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && player.GetComponent<feetManager>().isGrounded)
         {
-            if (player.GetComponent<feetManager>().isGrounded)
-            {
-                currVelocity.y = maxJump;
-            }
+            currVelocity.y = maxJump;
         }
-        player.GetComponent<Rigidbody2D>().velocity = currVelocity;
+
+        rb.velocity = currVelocity;
+
+        animator.SetBool("isRunning", dir != 0);
     }
 }

@@ -1,42 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class Fire : MonoBehaviour
 {
-    GameObject player;
+    private GameObject player;
+    private Rigidbody2D rb;
+    private Animator animator;
+    private TrailRenderer tr;
 
-    float speed = 0f;
-    float speedVelocity = 0f;
+    private float speed = 0f;
+    private float speedVelocity = 0f;
+    private int dir = 0;
 
     public float speedIncrease = 0.4f;
     public float speedMaxIncrease = 13.5f;
-
     public float speedDecrease = 3.5f;
     public float speedDecreaseAir = 0.2f;
-
     public float maxJump = 12f;
-
     public float gravity = 3.3f;
 
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 1f;
+    public float dashingPower = 24f;
+    public float dashingTime = 0.4f;
+    public float dashingCooldown = 1f;
 
-    int dir = 0;
 
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("main");
+        rb = player.GetComponent<Rigidbody2D>();
+        tr = player.GetComponent<TrailRenderer>();
+        animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (isDashing){
+        if (isDashing)
             return;
-        }
+
         else if (Input.GetKeyDown(KeyCode.Space) && canDash)
         {
             Debug.Log("??");
@@ -44,26 +46,23 @@ public class Fire : MonoBehaviour
             return;
         }
 
-        Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
+        Vector2 currVelocity = rb.velocity;
 
-        if (player.GetComponent<Rigidbody2D>().gravityScale != gravity)
-            player.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        if (rb.gravityScale != gravity)
+            rb.gravityScale = gravity;
 
         speed = 0f;
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (!isDashing && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)))
         {
-            dir = -1;
+            dir = Input.GetKey(KeyCode.LeftArrow) ? -1 : 1;
             speedVelocity = Mathf.Clamp01(speedVelocity + speedIncrease);
+            player.transform.localScale = new Vector2(dir * Mathf.Abs(player.transform.localScale.x), player.transform.localScale.y);
+            Debug.Log("Moving direction: " + (dir == -1 ? "left" : "right"));
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            dir = 1;
-            speedVelocity = Mathf.Clamp01(speedVelocity + speedIncrease);
-        }
+        
         else
         {
-            speed = (speedMaxIncrease * speedVelocity) * dir;
-            if ((dir == 1 && speed > 0f || dir == -1 && speed < 0f))
+            if (dir != 0)
             {
                 if (player.GetComponent<feetManager>().isGrounded)
                 {
@@ -73,50 +72,42 @@ public class Fire : MonoBehaviour
                 {
                     speedVelocity -= speedDecreaseAir * Time.deltaTime;
                 }
-                speed = Mathf.Lerp(0f, speedMaxIncrease, speedVelocity);
+                speedVelocity = Mathf.Clamp01(speedVelocity);
             }
-            else
-            {
-                speed = 0f;
-                speedVelocity = 0f;
-                dir = 0;
-            }
+            dir = 0;
         }
+
         speed = (speedMaxIncrease * speedVelocity) * dir;
         currVelocity.x = speed;
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (!isDashing && Input.GetKeyDown(KeyCode.UpArrow) && player.GetComponent<feetManager>().isGrounded)
         {
-            if (player.GetComponent<feetManager>().isGrounded)
-            {
-                currVelocity.y = maxJump;
-            }
+            currVelocity.y = maxJump;
         }
 
-        player.GetComponent<Rigidbody2D>().velocity = currVelocity;
+        rb.velocity = currVelocity;
+
+        animator.SetBool("isRunning", dir != 0);
     }
 
     private IEnumerator Dash()
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        TrailRenderer tr = GetComponent<TrailRenderer>();
 
-        bool ping = false;
-        player.GetComponent<Base>().deleteLastElement = () => { ping = true; };
+        Debug.Log("Dashing in direction: " + (dir == -1 ? "left" : "right"));
         canDash = false;
-        isDashing = true; 
+        isDashing = true;
+
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        rb.velocity = new Vector2(dashingPower * dir, 0f);
         tr.emitting = true;
+
         yield return new WaitForSeconds(dashingTime);
-        tr.emitting = false;
+
         rb.gravityScale = originalGravity;
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
-        Debug.Log("we unlock");
+
         canDash = true;
-        if(ping) { Destroy(player.GetComponent<Fire>()); }
-        else { player.GetComponent<Base>().deleteLastElement = () => { Destroy(player.GetComponent<Fire>()); }; }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class Ice : Element
+public class OldIce : Element
 {
     GameObject player = GameObject.FindGameObjectWithTag("main");
 

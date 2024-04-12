@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class Fire : Element
+public class OldFire : Element
 {
-    GameObject player = GameObject.FindGameObjectWithTag("main");
+    GameObject player;
 
     float speed = 0f;
     float speedVelocity = 0f;
@@ -28,9 +28,11 @@ public class Fire : Element
     public float dash_limit = 1f;
 
     int dir = 0;
+    private void OnEnable()
+    {
+        player = GameObject.FindGameObjectWithTag("main");
+    }
 
-    //public int hp = 10;
-    //int damage = 1;
     public override void move()
     {
         //Debug.Log("Fire Fire Light The Fire");

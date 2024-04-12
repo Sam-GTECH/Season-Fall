@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class OldAir : Element
+public class Fire : MonoBehaviour
 {
-    GameObject player = GameObject.FindGameObjectWithTag("main");
+    GameObject player;
 
     float speed = 0f;
     float speedVelocity = 0f;
@@ -16,19 +14,36 @@ public class OldAir : Element
 
     public float speedDecrease = 3.5f;
     public float speedDecreaseAir = 0.2f;
-    //public float speedDecreaseIce = 0.5f; 
 
     public float maxJump = 12f;
 
     public float gravity = 3.3f;
 
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+
     int dir = 0;
 
-    //public int hp = 10;
-    //int damage = 1;
-    public override void move()
+    private void OnEnable()
     {
-        Debug.Log("Air");
+        player = GameObject.FindGameObjectWithTag("main");
+    }
+
+    void Update()
+    {
+        if (isDashing){
+            return;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && canDash)
+        {
+            Debug.Log("??");
+            StartCoroutine(Dash());
+            return;
+        }
+
         Vector2 currVelocity = new(0, player.GetComponent<Rigidbody2D>().velocity.y);
 
         if (player.GetComponent<Rigidbody2D>().gravityScale != gravity)
@@ -37,13 +52,11 @@ public class OldAir : Element
         speed = 0f;
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            player.GetComponent<SpriteRenderer>().color = Color.red;
             dir = -1;
             speedVelocity = Mathf.Clamp01(speedVelocity + speedIncrease);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            player.GetComponent<SpriteRenderer>().color = Color.blue;
             dir = 1;
             speedVelocity = Mathf.Clamp01(speedVelocity + speedIncrease);
         }
@@ -80,13 +93,30 @@ public class OldAir : Element
             }
         }
 
-        currVelocity.x = speed;
-        currVelocity.y = currVelocity.y + 0.2f;
         player.GetComponent<Rigidbody2D>().velocity = currVelocity;
     }
 
-    public override string getElem()
+    private IEnumerator Dash()
     {
-        return "air";
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        TrailRenderer tr = GetComponent<TrailRenderer>();
+
+        bool ping = false;
+        player.GetComponent<Base>().deleteLastElement = () => { ping = true; };
+        canDash = false;
+        isDashing = true; 
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        Debug.Log("we unlock");
+        canDash = true;
+        if(ping) { Destroy(player.GetComponent<Fire>()); }
+        else { player.GetComponent<Base>().deleteLastElement = () => { Destroy(player.GetComponent<Fire>()); }; }
     }
 }

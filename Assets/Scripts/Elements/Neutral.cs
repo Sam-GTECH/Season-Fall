@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class Neutral : Element
+public class OldNeutral : Element
 {
     GameObject player = GameObject.FindGameObjectWithTag("main");
 

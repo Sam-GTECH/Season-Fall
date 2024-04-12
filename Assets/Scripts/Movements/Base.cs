@@ -4,6 +4,7 @@ using UnityEngine;
 public class Base : MonoBehaviour
 {
     GameObject player;
+
     public Action deleteLastElement;
     string bombElement;
     public Animator animator;
@@ -82,7 +83,7 @@ public class Base : MonoBehaviour
     {
         if (other.CompareTag("GroundElem") || other.CompareTag("WindElem") || other.CompareTag("FireElem") || other.CompareTag("IceElem"))
         {
-            setElement("neutral");
+            setElement(GameObject.Find("Grid").GetComponent<GridElement>().getElement());
         }
     }
     public virtual string getElem()

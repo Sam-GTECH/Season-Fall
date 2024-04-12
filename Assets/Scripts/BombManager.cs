@@ -87,7 +87,7 @@ public class BombManager : MonoBehaviour
             GameObject instance = Instantiate(currentZone, transform.position, transform.rotation);
             Vector3 pos = GetComponent<Transform>().position;
             ElemDecay.handleExistingZones(() => {
-                Destroy(instance);
+                //Destroy(instance);
                 foreground.GetComponent<ChangeTile>().HandleTilePlacing(pos, GameObject.Find("Grid").GetComponent<GridElement>().getElement());
                 background.GetComponent<ChangeTile>().HandleTilePlacing(pos, GameObject.Find("Grid").GetComponent<GridElement>().getElement());
             });

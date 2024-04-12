@@ -14,6 +14,7 @@ TagManager:
   - FireElem
   - WindElem
   - Grid
+  - UI
   layers:
   - Default
   - TransparentFX

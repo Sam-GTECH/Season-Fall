@@ -93,6 +93,7 @@ public class OldFire : Element
 
             if (Input.GetKey(KeyCode.UpArrow))
             {
+                Debug.Log(player.GetComponent<feetManager>().isGrounded);
                 if (player.GetComponent<feetManager>().isGrounded)
                 {
                     currVelocity.y = maxJump;
